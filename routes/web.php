@@ -131,8 +131,11 @@ Route::get("study-question", [ QuizController::class, "question" ])->name("study
 Route::post("study-match", [ QuizController::class, "match" ])->name("study-match");
 
 use App\Http\Controllers\Covid19Controller;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\QuotationDetailController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VehicleController;
@@ -172,3 +175,13 @@ Route::resource('post', PostController::class);
 Route::resource('profile', ProfileController::class);
 Route::resource('user', UserController::class);
 Route::resource('vehicle', VehicleController::class);
+// Route::resource('customer', 'CustomerController');
+// Route::resource('quotation', 'QuotationController');
+// Route::resource('quotation-detail', 'QuotationDetailController');
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('customer', CustomerController::class);
+    Route::get('quotation/{id}/pdf', [QuotationController::class, 'pdf']);
+    Route::resource('quotation', QuotationController::class);
+    Route::resource('quotation-detail', QuotationDetailController::class);
+});
